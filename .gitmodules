@@ -4,4 +4,8 @@
 	branch = europar
 [submodule "ext/merge-spmv"]
 	path = ext/merge-spmv
-	url = https://github.com/owensgroup/merge-spmv.git
+	url = https://github.com/dwwcqu/merge-spmv.git
+	branch = cuda-11.6
+[submodule "ext/cuda-samples"]
+	path = ext/cuda-samples
+	url = https://github.com/NVIDIA/cuda-samples.git
