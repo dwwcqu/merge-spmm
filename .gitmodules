@@ -8,4 +8,4 @@
 [submodule "ext/moderngpu"]
 	path = ext/moderngpu
 	url = https://github.com/dwwcqu/moderngpu.git
-	branch = branch_1.1
+	branch = europar-cuda11

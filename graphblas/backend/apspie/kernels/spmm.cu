@@ -153,8 +153,8 @@ namespace backend
             #pragma unroll
             for( int ii=0; ii<TB; ii++ )
             {
-              col_all[ii] = __shfl(col, ii+kk);
-              val_all[ii] = __shfl(val, ii+kk);
+              col_all[ii] = __shfl_sync(0xFFFFFFFF, col, ii+kk);
+              val_all[ii] = __shfl_sync(0xFFFFFFFF, val, ii+kk);
               //sum        += val_all[ii]*__ldg(B_offset+col_all[ii]);
               vals[   ii] = val_all[ii]*__ldg(B_offset+col_all[ii]);
               //vals[   ii] = __ldg(B_offset+col_all[ii]);
@@ -201,8 +201,8 @@ namespace backend
               #pragma unroll
               for( int ii=0; ii<TB; ii++ )
               {
-                col_all[ii] = __shfl(col, ii+kk);
-                val_all[ii] = __shfl(val, ii+kk);
+                col_all[ii] = __shfl_sync(0xFFFFFFFF, col, ii+kk);
+                val_all[ii] = __shfl_sync(0xFFFFFFFF, val, ii+kk);
                 //sum        += val_all[ii]*__ldg(B_offset+col_all[ii]);
                 if( lane_id<leftover )
                   vals[ii]  = val_all[ii]*__ldg(B_offset+col_all[ii]);

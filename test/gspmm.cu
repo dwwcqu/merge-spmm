@@ -27,7 +27,6 @@ int main(int argc, char **argv)
   namespace po = boost::program_options;
   po::variables_map vm;
   parseArgs(argc, argv, vm);
-  parseArgs(argc, argv, vm);
   int TA, TB, NT, NUM_ITER, MAX_NCOLS;
   bool ROW_MAJOR, DEBUG;
   std::string mode;
@@ -42,7 +41,8 @@ int main(int argc, char **argv)
 
   // default values of TA, TB, NT will be used
   graphblas::Descriptor desc;
-  desc.set(graphblas::GrB_MODE, graphblas::GrB_FIXEDROW);
+  // default mergepath algo
+  desc.set(graphblas::GrB_MODE, graphblas::GrB_MERGEPATH);
   desc.set(graphblas::GrB_NT, NT);
   desc.set(graphblas::GrB_TA, TA);
   desc.set(graphblas::GrB_TB, TB);
@@ -199,5 +199,8 @@ int main(int argc, char **argv)
     }
   }
   std::cout << "There were " << correct << " errors out of " << count << ".\n";
+  CUDA(cudaFree(desc.descriptor_.d_limits_));
+  CUDA(cudaFree(desc.descriptor_.d_carryin_));
+  CUDA(cudaFree(desc.descriptor_.d_carryout_));
   return (correct == 0 ? 0 : 1);
 }
