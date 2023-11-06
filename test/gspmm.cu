@@ -158,7 +158,13 @@ int main(int argc, char **argv)
     b.print();
   graphblas::Matrix<float> c(nrows, max_ncols);
   graphblas::Semiring op;
+  // spmm compute summary print
+  std::cout << "A: " << nrows << ", " << ncols << ", " << nvals << std::endl;
+  std::cout << "B: " << ncols << ", " << max_ncols << std::endl;
 
+  // sparse matrix sparse degree print
+  double degree = ((double )nvals) / ((double) nrows * ncols);
+  std::cout << std::fixed << "Sparse Degree: " <<  degree * 100 << "%\n";
   graphblas::GpuTimer gpu_mxm;
   cudaProfilerStart();
   gpu_mxm.Start();
@@ -166,8 +172,10 @@ int main(int argc, char **argv)
   gpu_mxm.Stop();
   cudaProfilerStop();
   float elapsed_mxm = gpu_mxm.ElapsedMillis();
-  std::cout << "mxm: " << elapsed_mxm << " ms\n";
-  // ROW_MAJOR=false;
+  std::cout << std::fixed << "mxm: " << elapsed_mxm << " ms\n";
+  // print GFLOPS
+  double gflops = 2.0 * ((double) max_ncols * nvals) / (elapsed_mxm / 1000.f);
+  std::cout << std::fixed << "GFLOPS: " << gflops / 1000000000 << " GFLOPs" << std::endl;
 
   std::vector<float> out_denseVal;
   if (DEBUG)

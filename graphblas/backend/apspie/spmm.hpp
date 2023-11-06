@@ -5,7 +5,7 @@
 
 #include <cuda.h>
 #include <cusparse.h>
-#include <helper_math.h>
+// #include <helper_math.h>
 
 #include <moderngpu.cuh>
 
